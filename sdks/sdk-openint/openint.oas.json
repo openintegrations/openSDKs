@@ -1472,25 +1472,31 @@
                         "items": {
                           "type": "string",
                           "enum": [
-                            "banking",
                             "accounting",
-                            "crm",
-                            "sales-engagement",
-                            "engagement",
-                            "commerce",
-                            "expense-management",
-                            "enrichment",
-                            "database",
-                            "flat-files-and-spreadsheets",
-                            "file-storage",
-                            "streaming",
-                            "personal-finance",
-                            "other",
-                            "hris",
-                            "payroll",
-                            "calendar",
                             "ats",
-                            "email"
+                            "banking",
+                            "calendar",
+                            "commerce",
+                            "communication",
+                            "crm",
+                            "database",
+                            "developer-tools",
+                            "email",
+                            "engagement",
+                            "enrichment",
+                            "expense-management",
+                            "file-storage",
+                            "flat-files-and-spreadsheets",
+                            "hris",
+                            "messaging",
+                            "other",
+                            "payroll",
+                            "personal-finance",
+                            "sales-enablement",
+                            "sales-engagement",
+                            "streaming",
+                            "ticketing",
+                            "wiki"
                           ]
                         }
                       },
@@ -5491,13 +5497,7 @@
                     "items": {
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {"type": "string"},
-                          "name": {"type": "string"},
-                          "url": {"type": "string"}
-                        },
-                        "required": ["id", "name", "url"]
+                        "$ref": "#/components/schemas/accounting.vendor"
                       }
                     }
                   },
@@ -5826,14 +5826,14 @@
                           "id": {"type": "string"},
                           "date": {"type": "string"},
                           "transactionType": {"type": "string"},
-                          "documentNumber": {"type": "string"},
-                          "posting": {"type": "string"},
-                          "name": {"type": "string"},
-                          "department": {"type": "string"},
-                          "memo": {"type": "string"},
-                          "account": {"type": "string"},
-                          "split": {"type": "string"},
-                          "amount": {"type": "number"},
+                          "documentNumber": {"type": ["string", "null"]},
+                          "posting": {"type": ["string", "null"]},
+                          "name": {"type": ["string", "null"]},
+                          "department": {"type": ["string", "null"]},
+                          "memo": {"type": ["string", "null"]},
+                          "account": {"type": ["string", "null"]},
+                          "split": {"type": ["string", "null"]},
+                          "amount": {"type": ["number", "null"]},
                           "raw_data": {}
                         },
                         "required": ["id", "date", "transactionType", "amount"]
@@ -7356,7 +7356,12 @@
           },
           {"in": "query", "name": "page_size", "schema": {"type": "number"}},
           {"in": "query", "name": "drive_id", "schema": {"type": "string"}},
-          {"in": "query", "name": "folder_id", "schema": {"type": "string"}}
+          {"in": "query", "name": "folder_id", "schema": {"type": "string"}},
+          {
+            "in": "query",
+            "name": "drive_group_id",
+            "schema": {"type": "string"}
+          }
         ],
         "responses": {
           "200": {
@@ -7908,9 +7913,10 @@
         "type": "string",
         "enum": [
           "unified_banking",
+          "unified_ats",
+          "unified_accounting",
           "prefix_connector_name",
           "single_table",
-          "unified_ats",
           "unified_crm",
           "custom_link_ag"
         ]
@@ -7932,25 +7938,31 @@
             "items": {
               "type": "string",
               "enum": [
-                "banking",
                 "accounting",
-                "crm",
-                "sales-engagement",
-                "engagement",
-                "commerce",
-                "expense-management",
-                "enrichment",
-                "database",
-                "flat-files-and-spreadsheets",
-                "file-storage",
-                "streaming",
-                "personal-finance",
-                "other",
-                "hris",
-                "payroll",
-                "calendar",
                 "ats",
-                "email"
+                "banking",
+                "calendar",
+                "commerce",
+                "communication",
+                "crm",
+                "database",
+                "developer-tools",
+                "email",
+                "engagement",
+                "enrichment",
+                "expense-management",
+                "file-storage",
+                "flat-files-and-spreadsheets",
+                "hris",
+                "messaging",
+                "other",
+                "payroll",
+                "personal-finance",
+                "sales-enablement",
+                "sales-engagement",
+                "streaming",
+                "ticketing",
+                "wiki"
               ]
             }
           },
@@ -8819,6 +8831,18 @@
           "account_name": {"type": ["string", "null"]}
         },
         "required": ["id", "date", "amount", "currency"]
+      },
+      "accounting.vendor": {
+        "type": "object",
+        "properties": {
+          "created_at": {"type": "string", "format": "date-time"},
+          "updated_at": {"type": "string", "format": "date-time"},
+          "raw": {"type": "object", "additionalProperties": {}},
+          "id": {"type": "string"},
+          "name": {"type": "string"},
+          "url": {"type": "string"}
+        },
+        "required": ["id", "name", "url"]
       },
       "ats.job": {
         "type": "object",

@@ -1821,9 +1821,10 @@ export interface components {
     /** @enum {string} */
     Link:
       | 'unified_banking'
+      | 'unified_ats'
+      | 'unified_accounting'
       | 'prefix_connector_name'
       | 'single_table'
-      | 'unified_ats'
       | 'unified_crm'
       | 'custom_link_ag'
     'core.integration': {
@@ -1838,25 +1839,31 @@ export interface components {
       login_url?: string | null
       verticals?:
         | (
-            | 'banking'
             | 'accounting'
-            | 'crm'
-            | 'sales-engagement'
-            | 'engagement'
-            | 'commerce'
-            | 'expense-management'
-            | 'enrichment'
-            | 'database'
-            | 'flat-files-and-spreadsheets'
-            | 'file-storage'
-            | 'streaming'
-            | 'personal-finance'
-            | 'other'
-            | 'hris'
-            | 'payroll'
-            | 'calendar'
             | 'ats'
+            | 'banking'
+            | 'calendar'
+            | 'commerce'
+            | 'communication'
+            | 'crm'
+            | 'database'
+            | 'developer-tools'
             | 'email'
+            | 'engagement'
+            | 'enrichment'
+            | 'expense-management'
+            | 'file-storage'
+            | 'flat-files-and-spreadsheets'
+            | 'hris'
+            | 'messaging'
+            | 'other'
+            | 'payroll'
+            | 'personal-finance'
+            | 'sales-enablement'
+            | 'sales-engagement'
+            | 'streaming'
+            | 'ticketing'
+            | 'wiki'
           )[]
         | null
       connector_name: string
@@ -2376,6 +2383,18 @@ export interface components {
       merchant_name?: string | null
       account_id?: string | null
       account_name?: string | null
+    }
+    'accounting.vendor': {
+      /** Format: date-time */
+      created_at?: string
+      /** Format: date-time */
+      updated_at?: string
+      raw?: {
+        [key: string]: unknown
+      }
+      id: string
+      name: string
+      url: string
     }
     /** @description An (open) role */
     'ats.job': {
@@ -3743,25 +3762,31 @@ export interface operations {
             isSource: boolean
             isDestination: boolean
             verticals: (
-              | 'banking'
               | 'accounting'
-              | 'crm'
-              | 'sales-engagement'
-              | 'engagement'
-              | 'commerce'
-              | 'expense-management'
-              | 'enrichment'
-              | 'database'
-              | 'flat-files-and-spreadsheets'
-              | 'file-storage'
-              | 'streaming'
-              | 'personal-finance'
-              | 'other'
-              | 'hris'
-              | 'payroll'
-              | 'calendar'
               | 'ats'
+              | 'banking'
+              | 'calendar'
+              | 'commerce'
+              | 'communication'
+              | 'crm'
+              | 'database'
+              | 'developer-tools'
               | 'email'
+              | 'engagement'
+              | 'enrichment'
+              | 'expense-management'
+              | 'file-storage'
+              | 'flat-files-and-spreadsheets'
+              | 'hris'
+              | 'messaging'
+              | 'other'
+              | 'payroll'
+              | 'personal-finance'
+              | 'sales-enablement'
+              | 'sales-engagement'
+              | 'streaming'
+              | 'ticketing'
+              | 'wiki'
             )[]
             integrations: string[]
           }[]
@@ -7070,11 +7095,7 @@ export interface operations {
           'application/json': {
             next_cursor?: string | null
             has_next_page: boolean
-            items: {
-              id: string
-              name: string
-              url: string
-            }[]
+            items: components['schemas']['accounting.vendor'][]
           }
         }
       }
@@ -7350,14 +7371,14 @@ export interface operations {
               id: string
               date: string
               transactionType: string
-              documentNumber?: string
-              posting?: string
-              name?: string
-              department?: string
-              memo?: string
-              account?: string
-              split?: string
-              amount: number
+              documentNumber?: string | null
+              posting?: string | null
+              name?: string | null
+              department?: string | null
+              memo?: string | null
+              account?: string | null
+              split?: string | null
+              amount: number | null
               raw_data?: unknown
             }[]
           }
@@ -8508,6 +8529,7 @@ export interface operations {
         page_size?: number
         drive_id?: string
         folder_id?: string
+        drive_group_id?: string
       }
       header?: never
       path?: never
